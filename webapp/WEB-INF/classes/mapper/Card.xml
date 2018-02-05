@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="inter.CardDAO"><!-- 这里指定操作类所在的文件路径 -->
+	<select id="GetCard" resultType="Card"> <!-- 这里是操作类所要调用的方法 --> <!--resultType赋值为方法的返回类型 ,比如map-->
+		select * from card where number=#{number}
+		<!--这里的#{} 相当于JDBC中的?这里为了保险起见最好数据库表类的变量和数据库中对应的变量名称相同 ,SQL获取什么-->
+	</select>
+	<update id="modifyPassword">
+		update card set password=#{password} where number=#{number}
+	</update>
+	<update id="modifyMoney">
+		update card set money=#{money} where number=#{number}
+		<!--以后在进行?的赋值时用#不要用$,这是因为#安全级别更高，可以防止SQL的注入 -->
+	</update>
+	<insert id="open" useGeneratedKeys="true" keyProperty="id">
+	<!--这里之所以需要useGeneratedKeys和keyProperty,是因为在执行插入SQL语句 时,因为 在数据库中将id作为主键 所以这里需要申明一下-->
+		insert card (number,password,money,createtime,modifytime) value (#{number},#{password},#{money},NOW(),NOW())
+		<!-- 这里如果以后出现这样的下划线可以 不需要理会-->
+	</insert>
+</mapper>
+<!--  Map数据表-->

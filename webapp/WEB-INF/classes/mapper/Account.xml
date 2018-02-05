@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="inter.AccountDAO">
+  	<insert id="add">
+  	insert account(number,money,type,createtime,description) values(#{number},#{money},#{type},NOW(),#{description})
+  	</insert>
+  	<select id="List" resultType="AccountFlow.Account"><!--这里需要注意的是对于ArrayList<Account>这样的返回类型 它的resultType=Account -->
+  		select * from account where number=#{number}
+  	</select>
+  </mapper>
